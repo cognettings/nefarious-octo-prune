@@ -4,7 +4,7 @@
   "description": "A Simple Login Example using Node.js, Mongo, Redis and PBKDF2",
   "main": "./src/app.js",
   "scripts": {
-    "start": "node ./src/app.js",
+    "start": "nodemon ./src/app.js",
     "pretest": "jshint ./src",
     "test": "echo \"Tests Complete\""
   },
