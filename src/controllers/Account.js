@@ -11,6 +11,7 @@ function signupPage(req, res) {
 }
 
 function logout(req, res) {
+  req.session.destroy();
   res.redirect('/');
 }
 
@@ -23,6 +24,8 @@ function login(req, res) {
     if (err || !account) {
       return res.status(400).json({error: 'Wrong username or password.'});
     }
+
+    req.session.account = account.toAPI();
 
     res.json({redirect: '/maker'});
   });
@@ -51,6 +54,8 @@ function signup(req, res) {
         console.log(err);
         return res.status(400).json({error: 'An error occurred.'});
       }
+
+      req.session.account = newAccount.toAPI();
 
       res.json({redirect: '/maker'});
     });
