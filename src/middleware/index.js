@@ -18,7 +18,7 @@ function requiresSecure(req, res, next) {
   if (req.headers['x-forwarded-proto'] != 'https') {
     console.log('Connection is not secure, redirecting to a secure connection.');
     console.log('Value of "x-forwarded-proto" was: ' + req.headers['x-forwarded-proto']);
-    return res.redirect('https://' + req.host + req.url);
+    return res.redirect('https://' + req.hostname + req.url);
   }
 
   console.log('Secure connection established.');
