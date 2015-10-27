@@ -15,7 +15,7 @@ function requiresLogout(req, res, next) {
 }
 
 function requiresSecure(req, res, next) {
-  if (req.headers.x-forwarded-proto != 'https') {
+  if (req.headers['x-forwarded-proto'] != 'https') {
     return res.redirect('https://' + req.host + req.url);
   }
 
