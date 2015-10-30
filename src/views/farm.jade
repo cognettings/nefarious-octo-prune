@@ -1,0 +1,15 @@
+extends ./base.jade
+block append style
+    link(rel="stylesheet", type="text/css", href="/assets/style.css")
+block body
+  nav
+    a(href="/login")
+      img#logo(src="/assets/img/face.png", alt="face logo")
+    .navlink
+      a(href="/logout") Log out
+    .navlink
+      a(href="/maker") Make Domo
+  canvas#farmCanvas(width="500px", height="500px")
+block scripts
+  script(src="/bower/victor/build/victor.min.js")
+  script(src="/assets/farm.js")

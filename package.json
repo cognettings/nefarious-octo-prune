@@ -1,10 +1,10 @@
 {
-  "name": "Logins",
+  "name": "domomaker-d",
   "version": "1.0.0",
-  "description": "A Simple Login Example using Node.js, Mongo, Redis and PBKDF2",
+  "description": "",
   "main": "./src/app.js",
   "scripts": {
-    "start": "node ./src/app.js",
+    "start": "nodemon ./src/app.js",
     "pretest": "jshint ./src",
     "test": "echo \"Tests Complete\""
   },
@@ -19,6 +19,7 @@
   "license": "Apache 2.0",
   "dependencies": {
     "body-parser": "^1.9.1",
+    "bower": "^1.6.5",
     "compression": "^1.2.0",
     "connect-redis": "^2.1.0",
     "cookie-parser": "^1.3.3",

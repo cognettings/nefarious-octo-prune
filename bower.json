@@ -1,0 +1,29 @@
+{
+  "name": "domomaker-d",
+  "description": "",
+  "main": "./src/app.js",
+  "authors": [
+    "John Cognetti"
+  ],
+  "license": "Apache 2.0",
+  "keywords": [
+    "Node",
+    "MVC",
+    "Redis",
+    "Login",
+    "PBKDF2"
+  ],
+  "homepage": "https://github.com/IGM-RichMedia-at-RIT/DomoMaker-A-Start",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "victor": "~1.1.0"
+  }
+}

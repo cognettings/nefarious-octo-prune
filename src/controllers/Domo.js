@@ -36,5 +36,10 @@ function makeDomo(req, res) {
   });
 };
 
+function farmPage(req, res) {
+  res.render('farm');
+}
+
 module.exports.makerPage = makerPage;
 module.exports.make = makeDomo;
+module.exports.farmPage = farmPage;

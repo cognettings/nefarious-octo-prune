@@ -39,6 +39,7 @@ var port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 var app = express();
 app.use('/assets', express.static(path.resolve(__dirname + '../../client/')));
+app.use('/bower', express.static(path.resolve(__dirname + '../../bower_components/')));
 app.use(compression());
 app.use(bodyParser.urlencoded({
   extended: true
