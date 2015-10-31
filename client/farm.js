@@ -8,7 +8,7 @@ var ctx;
 var width;
 var height;
 
-var domos = [{}, {}, {}, {}, {}];
+// domos comes from jade page
 
 function init() {
   canvas = document.querySelector('#farmCanvas');

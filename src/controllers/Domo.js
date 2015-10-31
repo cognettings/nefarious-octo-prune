@@ -37,7 +37,21 @@ function makeDomo(req, res) {
 };
 
 function farmPage(req, res) {
-  res.render('farm');
+  Domo.DomoModel.findByOwner(req.session.account._id, function(err, docs) {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({error: 'An error occurred.'});
+    }
+
+    var domos = [];
+    docs.forEach(function (doc, index) {
+      domos[index] = JSON.stringify(doc.toObject());
+    });
+
+    console.log(domos);
+
+    res.render('farm', {domos: domos, account: req.session.account.name});
+  });
 }
 
 module.exports.makerPage = makerPage;
