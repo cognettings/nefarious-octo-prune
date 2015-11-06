@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./src/app.js",
     "pretest": "jshint ./src",
-    "test": "echo \"Tests Complete\""
+    "test": "echo \"Tests Complete\"",
+    "postinstall": "bower install"
   },
   "keywords": [
     "Node",
