@@ -21,7 +21,7 @@ function init() {
   ctx.fillRect(0, 0, width, height);
 
   createDomos();
-  setInterval(main, 100);
+  window.requestAnimationFrame(main);
 }
 
 function createDomos() {
@@ -65,7 +65,6 @@ function randomVec(maxX, maxY) {
   var x = Math.floor(Math.random() * maxX) + 1;
   var y = Math.floor(Math.random() * maxY) + 1;
 
-  console.log('random vec: ' + vec(x, y));
   return vec(x, y);
 }
 
@@ -85,6 +84,7 @@ function arrivedAtDestination(object) {
 function main() {
   update();
   display();
+  window.requestAnimationFrame(main);
 }
 
 function updateDomos() {

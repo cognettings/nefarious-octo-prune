@@ -48,8 +48,6 @@ function farmPage(req, res) {
       domos[index] = JSON.stringify(doc.toObject());
     });
 
-    console.log(domos);
-
     res.render('farm', {domos: domos, account: req.session.account.name});
   });
 }
