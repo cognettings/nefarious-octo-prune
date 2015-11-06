@@ -10,11 +10,24 @@ var height;
 
 // domos comes from jade page
 var domoSpeed = vec(1, 1);
-var domoDim = vec(20, 20);
+var domoDim = vec(40, 40);
 var domoStartPos;
 var domoWobbleDegrees = 5 * Math.PI / 180;
 var thetaInc = 0.01;
 var thetaScale = 25;
+
+// assets
+var images = {};
+var imageAssets = [
+  {
+    name: 'domo',
+    src: 'assets/img/domosprite.png'
+  },
+  {
+    name: 'grassTile',
+    src: 'http://i.imgur.com/FeThD.png'
+  }
+];
 
 function init() {
   canvas = document.querySelector('#farmCanvas');
@@ -28,7 +41,13 @@ function init() {
   ctx.fillRect(0, 0, width, height);
 
   createDomos();
-  window.requestAnimationFrame(main);
+
+  var startMain = _.after(imageAssets.length, main);
+  _.each(imageAssets, function (asset) {
+    images[asset.name] = new Image();
+    images[asset.name].src = asset.src;
+    images[asset.name].onload = startMain;
+  });
 }
 
 function createDomos() {
@@ -63,7 +82,8 @@ function drawDomos() {
     ctx.save();
     ctx.translate(domo.pos.x, domo.pos.y);
     ctx.rotate(domo.drawRotation);
-    ctx.fillRect(-1 * domo.dim.x / 2, -1 * domo.dim.y, domo.dim.x, domo.dim.y);
+    //ctx.fillRect(-1 * domo.dim.x / 2, -1 * domo.dim.y, domo.dim.x, domo.dim.y);
+    ctx.drawImage(images.domo, -1 * domo.dim.x / 2, -1 * domo.dim.y, domo.dim.x, domo.dim.y);
     ctx.restore();
   }
 
@@ -71,8 +91,13 @@ function drawDomos() {
 }
 
 function drawBackground() {
-  ctx.fillStyle = 'rgb(0, 150, 0)';
-  ctx.fillRect(0, 0, width, height);
+  var grassWidth = images.grassTile.width;
+  var grassHeight = images.grassTile.height;
+  for (var x = 0; x < width; x += grassWidth) {
+    for (var y = 0; y < height; y += grassHeight) {
+      ctx.drawImage(images.grassTile, x, y);
+    }
+  }
 }
 
 function randomVec(maxX, maxY) {
