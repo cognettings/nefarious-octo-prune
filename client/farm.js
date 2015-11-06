@@ -9,9 +9,12 @@ var width;
 var height;
 
 // domos comes from jade page
-var domoSpeed = vec(1.5, 1.5);
+var domoSpeed = vec(1, 1);
 var domoDim = vec(20, 20);
 var domoStartPos;
+var domoWobbleDegrees = 5 * Math.PI / 180;
+var thetaInc = 0.01;
+var thetaScale = 25;
 
 function init() {
   canvas = document.querySelector('#farmCanvas');
@@ -34,8 +37,11 @@ function createDomos() {
     domo.dest = null;
     domo.speed = domoSpeed.clone();
     domo.dim = domoDim;
+    domo.drawRotation = null;
+    domo.theta = Math.random() * 2 * Math.PI;
   }
 
+  // Domos come from jade
   domos.forEach(create);
 }
 
@@ -54,7 +60,11 @@ function drawDomos() {
     }
     */
   
-    ctx.fillRect(domo.pos.x - domo.dim.x / 2, domo.pos.y + domo.dim.y / 2, domo.dim.x, domo.dim.y);
+    ctx.save();
+    ctx.translate(domo.pos.x, domo.pos.y);
+    ctx.rotate(domo.drawRotation);
+    ctx.fillRect(-1 * domo.dim.x / 2, -1 * domo.dim.y, domo.dim.x, domo.dim.y);
+    ctx.restore();
   }
 
   domos.forEach(draw);
@@ -108,6 +118,9 @@ function updateDomos() {
     if (arrivedAtDestination(domo)) {
       domo.dest = null;
     }
+
+    domo.theta += thetaInc;
+    domo.drawRotation = domoWobbleDegrees * Math.sin(thetaScale * domo.theta);
   }
 
   domos.forEach(update);
