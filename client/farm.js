@@ -9,6 +9,9 @@ var width;
 var height;
 
 // domos comes from jade page
+var domoSpeed = vec(1.5, 1.5);
+var domoDim = vec(20, 20);
+var domoStartPos;
 
 function init() {
   canvas = document.querySelector('#farmCanvas');
@@ -16,6 +19,7 @@ function init() {
   
   width = canvas.width;
   height = canvas.height;
+  domoStartPos = vec(width / 2, height / 2);
 
   ctx.fillStyle = 'rgb(0, 150, 0)';
   ctx.fillRect(0, 0, width, height);
@@ -26,10 +30,10 @@ function init() {
 
 function createDomos() {
   function create(domo) {
-    domo.pos = vec(width / 2, height / 2);
+    domo.pos = domoStartPos.clone();
     domo.dest = null;
-    domo.speed = vec(5, 5);
-    domo.dim = vec(10, 10);
+    domo.speed = domoSpeed.clone();
+    domo.dim = domoDim;
   }
 
   domos.forEach(create);
@@ -76,7 +80,12 @@ function seekDestination(object) {
 }
 
 function arrivedAtDestination(object) {
-  var distance = object.pos.distance(object.dest);
+  if (object.dest) {
+    var distance = object.pos.distance(object.dest);
+  }
+  else {
+    return false;
+  }
 
   return distance <= object.speed.x;
 }
