@@ -14,6 +14,18 @@ function makerPage(req, res) {
   });
 };
 
+function sizeToWeight(size) {
+  if (size === 'small') {
+    return 1;
+  }
+  else if (size === 'medium') {
+    return 13;
+  }
+  else if (size === 'large') {
+    return 20;
+  }
+}
+
 function makeDomo(req, res) {
   if (!req.body.name || !req.body.age) {
     return res.status(400).json({error: 'RAWR! Both name and age are required.'});
@@ -22,6 +34,7 @@ function makeDomo(req, res) {
   var domoData = {
     name: req.body.name,
     age: req.body.age,
+    weight: sizeToWeight(req.body.size),
     owner: req.session.account._id
   };
 
