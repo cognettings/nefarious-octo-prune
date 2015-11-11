@@ -10,11 +10,13 @@ var height;
 
 // domos comes from jade page
 var domoSpeed = vec(1, 1);
-var domoDim = vec(40, 40);
+var domoDim = vec(30, 30);
 var domoStartPos;
-var domoWobbleDegrees = 5 * Math.PI / 180;
-var thetaInc = 0.01;
-var thetaScale = 25;
+
+// Domo wobbling
+var domoWobbleDegrees = 5 * Math.PI / 180; // How many degrees the Domo wobbles.
+var thetaInc = 0.01; // Base increment for the wobble (should not be changed)
+var thetaScale = 25; // Scales the increment, higher for faster wobbling, lower for slower.
 
 // assets
 var images = {};
@@ -50,12 +52,20 @@ function init() {
   });
 }
 
+function getScaleFromWeight(weight) {
+  // set 6 as max scale, and 50 weight will give a 5 scale
+  function y(x) { return 6 - 5 / (1 + x * x / 625); }
+
+  var scale = y(weight);
+  return vec(scale, scale);
+}
+
 function createDomos() {
   function create(domo) {
     domo.pos = domoStartPos.clone();
     domo.dest = null;
     domo.speed = domoSpeed.clone();
-    domo.dim = domoDim;
+    domo.dim = domoDim.clone().multiply(getScaleFromWeight(domo.weight));
     domo.drawRotation = null;
     domo.theta = Math.random() * 2 * Math.PI;
   }
@@ -82,7 +92,6 @@ function drawDomos() {
     ctx.save();
     ctx.translate(domo.pos.x, domo.pos.y);
     ctx.rotate(domo.drawRotation);
-    //ctx.fillRect(-1 * domo.dim.x / 2, -1 * domo.dim.y, domo.dim.x, domo.dim.y);
     ctx.drawImage(images.domo, -1 * domo.dim.x / 2, -1 * domo.dim.y, domo.dim.x, domo.dim.y);
     ctx.restore();
   }
