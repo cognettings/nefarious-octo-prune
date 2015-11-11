@@ -4,6 +4,7 @@ window.onload = init;
 
 var canvas;
 var ctx;
+var socket;
 
 var width;
 var height;
@@ -54,11 +55,17 @@ function onClick(evt) {
     if (testPointRectIntersection(vec(evt.offsetX, evt.offsetY), viewRect)) {
       domo.weight += weightInc;
       domo.dim = domoDim.clone().multiply(getScaleFromWeight(domo.weight));
+      socket.emit('update weight', {
+        id: domo['_id'],
+        weight: domo.weight
+      });
     }
   });
 }
 
 function init() {
+  socket = io.connect();
+
   canvas = document.querySelector('#farmCanvas');
   ctx = canvas.getContext('2d');
   

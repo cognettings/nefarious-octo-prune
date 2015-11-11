@@ -10,6 +10,7 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var url = require('url');
 var csrf = require('csurf');
+var realtimeData = require('./realtime');
 
 var dbURL = process.env.MONGOLAB_URI || 'mongodb://localhost/DomoMaker';
 
@@ -72,10 +73,13 @@ app.use(function (err, req, res, next) {
 
 router(app);
 
-app.listen(port, function(err) {
+var server = app.listen(port, function(err) {
   if (err) {
     throw err;
   }
 
   console.log('Listening on port ' + port);
 });
+
+var io = require('socket.io')(server);
+realtimeData(io);

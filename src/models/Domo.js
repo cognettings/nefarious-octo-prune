@@ -55,6 +55,10 @@ DomoSchema.statics.findByOwner = function(ownerId, callback) {
   return DomoModel.find(search).select("name age weight").exec(callback);
 };
 
+DomoSchema.statics.updateWeight = function(domoId, weight, callback) {
+  DomoModel.update({"_id": domoId}, {"weight": weight}).exec(callback);
+};
+
 DomoModel = mongoose.model('Domo', DomoSchema);
 
 module.exports.DomoModel = DomoModel;
