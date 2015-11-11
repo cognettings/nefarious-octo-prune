@@ -12,6 +12,7 @@ var height;
 var domoSpeed = vec(1, 1);
 var domoDim = vec(30, 30);
 var domoStartPos;
+var weightInc = 0.5;
 
 // Domo wobbling
 var domoWobbleDegrees = 5 * Math.PI / 180; // How many degrees the Domo wobbles.
@@ -31,6 +32,32 @@ var imageAssets = [
   }
 ];
 
+function testPointRectIntersection(point, rect) {
+  if (point.x <= rect.pos.x + rect.dim.x &&
+      point.x >= rect.pos.x &&
+      point.y <= rect.pos.y + rect.dim.y &&
+      point.y >= rect.pos.y
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function onClick(evt) {
+  domos.forEach(function(domo) {
+    var viewRect = {
+      pos: domo.pos.clone().subtract(vec(domo.dim.x/2, domo.dim.y)),
+      dim: domo.dim.clone()
+    };
+       
+    if (testPointRectIntersection(vec(evt.offsetX, evt.offsetY), viewRect)) {
+      domo.weight += weightInc;
+      domo.dim = domoDim.clone().multiply(getScaleFromWeight(domo.weight));
+    }
+  });
+}
+
 function init() {
   canvas = document.querySelector('#farmCanvas');
   ctx = canvas.getContext('2d');
@@ -41,6 +68,9 @@ function init() {
 
   ctx.fillStyle = 'rgb(0, 150, 0)';
   ctx.fillRect(0, 0, width, height);
+
+  canvas.addEventListener('click', onClick);
+  canvas.onselectstart = function () {return false;};
 
   createDomos();
 
